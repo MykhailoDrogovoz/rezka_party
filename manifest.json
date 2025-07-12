@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Rezka Party",
+  "version": "1.0",
+  "description": "Watch videos together with synced playback and chat.",
+  "permissions": ["scripting", "storage", "activeTab"],
+  "host_permissions": ["https://rezka.ag/*"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://rezka.ag/*"],
+      "js": ["dist/content.bundle.js"],
+      "css": ["styles.css"]
+    }
+  ]
+}

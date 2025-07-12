@@ -1,0 +1,112 @@
+/* style.css */
+
+.rezka-chat-box {
+  position: fixed;
+  right: 20px;
+  bottom: 10px;
+  width: 300px;
+  height: 400px;
+  background: white;
+  border: 5px solid #59c4ce;
+  background: #00eaff;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+}
+
+.rezka-messages {
+  overflow-y: auto;
+  flex-grow: 1;
+  padding: 8px;
+  font-size: 14px;
+  border-bottom: 5px solid #000000;
+  color: #ff0000;
+}
+
+.rezka-chat-input {
+  border: none;
+  padding: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.emoji-panel {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  gap: 5px;
+  z-index: 999999;
+}
+
+.emoji-btn {
+  font-size: 20px;
+  padding: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.emojii-container {
+  position: fixed;
+  /* left: 50%; */
+  bottom: 60px;
+  transform: translateX(-50%);
+  z-index: 999999;
+  pointer-events: none;
+  width: 100vw;
+}
+
+.floating-emoji {
+  font-size: 32px;
+  animation: float-up 3s ease-out forwards;
+  position: absolute;
+  left: 0;
+}
+
+@keyframes float-up {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.4;
+    transform: translateY(-90vh);
+  }
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+
+.close-chat {
+  color: #646e0e;
+  text-align: right;
+  cursor: pointer;
+}
+
+.reopen-chat-btn {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  z-index: 999999;
+  padding: 8px 12px;
+  background: #fbb845;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.reopen-chat-btn:hover {
+  background: #9a1d04;
+  color: #4b1d1d;
+}
