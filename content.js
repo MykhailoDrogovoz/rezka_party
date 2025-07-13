@@ -5,14 +5,14 @@ import { getDatabase, ref, set, onValue, push } from "firebase/database";
 
 (async function () {
   const firebaseConfig = {
-    apiKey: process.env.apiKey,
-    authDomain: process.env.authDomain,
-    databaseURL: process.env.databaseURL,
-    projectId: process.env.projectId,
-    storageBucket: process.env.storageBucket,
-    messagingSenderId: process.env.messagingSenderId,
-    appId: process.env.appId,
-    measurementId: process.env.measurementId,
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID,
   };
 
   // Initialize Firebase app and database
@@ -96,11 +96,18 @@ import { getDatabase, ref, set, onValue, push } from "firebase/database";
     reopenBtn.style.display = "none";
   });
 
-  // Close button inside chat box
+  const chatHeader = document.createElement("div");
+  chatHeader.classList.add("chat-header");
+  chatBox.appendChild(chatHeader);
+
+  const chatHeading = document.createElement("h3");
+  chatHeading.textContent = "Chat";
+  chatHeader.appendChild(chatHeading);
+
   const closeChat = document.createElement("p");
   closeChat.classList.add("close-chat");
   closeChat.textContent = "close";
-  chatBox.appendChild(closeChat);
+  chatHeader.appendChild(closeChat);
 
   // Close chat logic
   closeChat.addEventListener("click", () => {
@@ -112,6 +119,27 @@ import { getDatabase, ref, set, onValue, push } from "firebase/database";
   const messagesDiv = document.createElement("div");
   messagesDiv.classList.add("rezka-messages");
   chatBox.appendChild(messagesDiv);
+
+  const emojiPanel = document.createElement("div");
+  emojiPanel.classList.add("emoji-panel");
+
+  const emojis = ["🎉", "😂", "❤️", "👍", "😮", "😢"];
+  emojis.forEach((emoji) => {
+    const btn = document.createElement("button");
+    btn.textContent = emoji;
+    btn.classList.add("emoji-btn");
+    btn.addEventListener("click", () => {
+      push(emojiiRef, { emojii: emoji });
+    });
+    emojiPanel.appendChild(btn);
+  });
+
+  chatBox.appendChild(emojiPanel);
+
+  // Emoji container for floating effects
+  const emojiiDiv = document.createElement("div");
+  emojiiDiv.classList.add("emojii-container");
+  document.body.appendChild(emojiiDiv);
 
   // Input field
   const input = document.createElement("input");
@@ -139,27 +167,6 @@ import { getDatabase, ref, set, onValue, push } from "firebase/database";
       .join("");
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   });
-
-  const emojiPanel = document.createElement("div");
-  emojiPanel.classList.add("emoji-panel");
-
-  const emojis = ["🎉", "😂", "❤️", "👍", "😮", "😢"];
-  emojis.forEach((emoji) => {
-    const btn = document.createElement("button");
-    btn.textContent = emoji;
-    btn.classList.add("emoji-btn");
-    btn.addEventListener("click", () => {
-      push(emojiiRef, { emojii: emoji });
-    });
-    emojiPanel.appendChild(btn);
-  });
-
-  document.body.appendChild(emojiPanel);
-
-  // Emoji container for floating effects
-  const emojiiDiv = document.createElement("div");
-  emojiiDiv.classList.add("emojii-container");
-  document.body.appendChild(emojiiDiv);
 
   // Show emoji briefly with animation
   onValue(emojiiRef, (snapshot) => {

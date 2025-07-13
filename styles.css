@@ -1,46 +1,65 @@
-/* style.css */
-
 .rezka-chat-box {
   position: fixed;
   right: 20px;
   bottom: 10px;
-  width: 300px;
-  height: 400px;
-  background: white;
-  border: 5px solid #59c4ce;
-  background: #00eaff;
+  width: 320px;
+  height: 420px;
+  border: 2px solid #001711;
+  background: #003525;
   z-index: 999999;
   display: flex;
   flex-direction: column;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 }
 
 .rezka-messages {
   overflow-y: auto;
   flex-grow: 1;
-  padding: 8px;
+  padding: 12px;
   font-size: 14px;
-  border-bottom: 5px solid #000000;
-  color: #ff0000;
+  color: #dcd0a8;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .rezka-chat-input {
-  border: none;
-  padding: 8px;
+  width: calc(100% - 40px);
+  margin: 0px auto 10px;
+  padding: 10px 14px;
   font-size: 14px;
+  border: none;
+  border-radius: 0 0 20px 20px;
   outline: none;
+  background-color: #00281f;
+  color: #dcd0a8;
+  box-shadow: 0 0 0 1px #004030 inset;
+  transition: all 0.3s ease;
+}
+
+.rezka-chat-input::placeholder {
+  color: #7c978a;
+  font-style: italic;
+}
+
+.rezka-chat-input:focus {
+  box-shadow: 0 0 0 2px #3baf8b inset;
+  background-color: #00352b;
 }
 
 .emoji-panel {
-  position: fixed;
-  bottom: 10px;
-  left: 10px;
-  background: white;
+  background: #fff;
   border: 1px solid #ccc;
-  padding: 6px;
-  border-radius: 8px;
+  padding: 8px 10px;
+  border-radius: 20px 20px 0 0;
   display: flex;
-  gap: 5px;
+  gap: 13px;
   z-index: 999999;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 7px;
 }
 
 .emoji-btn {
@@ -88,9 +107,29 @@
 }
 
 .close-chat {
-  color: #646e0e;
-  text-align: right;
+  color: #ff7272;
   cursor: pointer;
+  font-size: 13px;
+  align-self: flex-end;
+  padding: 4px 10px;
+  transition: color 0.2s ease;
+}
+.close-chat:hover {
+  color: #ffb3b3;
+}
+
+.chat-header {
+  background-color: #001711;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #003525;
+}
+.chat-header h3 {
+  font-size: 16px;
+  color: #dcd0a8;
+  margin: 0;
 }
 
 .reopen-chat-btn {
@@ -99,7 +138,7 @@
   bottom: 10px;
   z-index: 999999;
   padding: 8px 12px;
-  background: #fbb845;
+  background: #004030;
   color: white;
   border: none;
   border-radius: 4px;
@@ -107,6 +146,6 @@
   cursor: pointer;
 }
 .reopen-chat-btn:hover {
-  background: #9a1d04;
-  color: #4b1d1d;
+  background: #001711;
+  color: white;
 }
