@@ -4,18 +4,21 @@ Rezka Party is a Chrome extension that lets you watch videos on Rezka.tv togethe
 
 ## Features 🚀
 
-- 🎥 Synchronized video playback (play, pause, seek) across all participants  
-- 💬 Built-in chat to communicate while watching  
-- 🔗 Easy to create and join watch parties via invite links  
-- 🎯 Specifically designed for Rezka.tv streaming platform  
+- 🎥 Synchronized video playback (play, pause, seek) across all participants
+- 💬 Built-in chat to communicate while watching
+- 🔗 Easy to create and join watch parties via invite links
+- 🎯 Specifically designed for Rezka.tv streaming platform
 
 ## Installation 🛠️
 
-1. Clone or download this repository.  
+1. Clone or download this repository.
 2. Open a terminal inside the project folder and run:
-  ```bash
-   npm install
+
+```bash
+ npm install
+ npx webpack --config webpack.config.js
 ```
+
 3. Open Chrome and go to chrome://extensions.
 
 4. Enable Developer mode (top right) ⚙️.
@@ -25,6 +28,7 @@ Rezka Party is a Chrome extension that lets you watch videos on Rezka.tv togethe
 6. The extension will appear in your toolbar 🎉.
 
 Usage ▶️
+
 1. Navigate to Rezka.tv and start playing a video.
 
 2. Click the Rezka Party extension icon to create a new watch party or join an existing one.
