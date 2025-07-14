@@ -70,13 +70,27 @@ document.addEventListener("DOMContentLoaded", () => {
         .writeText(partyLink)
         .then(() => {
           chrome.tabs.update(tab.id, { url: partyLink }, () => {
-            chrome.tabs.sendMessage(tab.id, { type: "partyCreated" });
+            chrome.tabs
+              .sendMessage(tab.id, { type: "partyCreated" })
+              .catch((err) => {
+                console.warn(
+                  "[PartyExtension] No content script listening:",
+                  err.message
+                );
+              });
           });
         })
         .catch(() => {
           alert("Failed to copy link. Please copy it manually:\n" + partyLink);
           chrome.tabs.update(tab.id, { url: partyLink }, () => {
-            chrome.tabs.sendMessage(tab.id, { type: "partyCreated" });
+            chrome.tabs
+              .sendMessage(tab.id, { type: "partyCreated" })
+              .catch((err) => {
+                console.warn(
+                  "[PartyExtension] No content script listening:",
+                  err.message
+                );
+              });
           });
         });
     });
