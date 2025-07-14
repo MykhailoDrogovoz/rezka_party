@@ -3,8 +3,8 @@
   "name": "Rezka Party",
   "version": "1.0",
   "description": "Watch videos together with synced playback and chat.",
-  "permissions": ["scripting", "storage", "activeTab"],
-  "host_permissions": ["https://rezka.ag/*"],
+  "permissions": ["tabs", "scripting", "storage", "activeTab"],
+  "host_permissions": ["https://rezka.ag/*", "https://rezka-ua.tv/*"],
   "action": {
     "default_popup": "popup.html"
   },
@@ -14,7 +14,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://rezka.ag/*"],
+      "matches": ["https://rezka.ag/*", "https://rezka-ua.tv/*"],
       "js": ["dist/content.bundle.js"],
       "css": ["styles.css"]
     }

@@ -83,6 +83,38 @@ import { getDatabase, ref, set, onValue, push } from "firebase/database";
   const chatBox = document.createElement("div");
   chatBox.classList.add("rezka-chat-box");
 
+  function isFullScreen() {
+    return document.fullscreenElement !== null;
+  }
+
+  function makeDraggable(element) {
+    let offsetX = 0,
+      offsetY = 0,
+      isDragging = false;
+
+    element.addEventListener("mousedown", (e) => {
+      if (isFullScreen()) return; // Don't drag in fullscreen
+      isDragging = true;
+      offsetX = e.clientX - element.getBoundingClientRect().left;
+      offsetY = e.clientY - element.getBoundingClientRect().top;
+      document.body.style.userSelect = "none";
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      element.style.left = e.clientX - offsetX + "px";
+      element.style.top = e.clientY - offsetY + "px";
+      element.style.right = "auto";
+      element.style.bottom = "auto";
+      element.style.position = "fixed";
+    });
+
+    document.addEventListener("mouseup", () => {
+      isDragging = false;
+      document.body.style.userSelect = "";
+    });
+  }
+
   // Create reopen button first so it's available when needed
   const reopenBtn = document.createElement("button");
   reopenBtn.textContent = "Open Chat";
@@ -136,10 +168,17 @@ import { getDatabase, ref, set, onValue, push } from "firebase/database";
 
   chatBox.appendChild(emojiPanel);
 
+  const videoParent = video.parentElement || document.body;
+  console.log(video.parentElement);
+
+  videoParent.style.position = "relative";
+  videoParent.style.zIndex = "0";
+  videoParent.style.width = "80vw";
+
   // Emoji container for floating effects
   const emojiiDiv = document.createElement("div");
   emojiiDiv.classList.add("emojii-container");
-  document.body.appendChild(emojiiDiv);
+  videoParent.appendChild(emojiiDiv);
 
   // Input field
   const input = document.createElement("input");
@@ -147,9 +186,13 @@ import { getDatabase, ref, set, onValue, push } from "firebase/database";
   input.placeholder = "Type your message...";
   input.classList.add("rezka-chat-input");
   chatBox.appendChild(input);
+  makeDraggable(chatBox);
+  makeDraggable(reopenBtn);
 
-  // Add chat box to document
+  const oframecdnplayer = document.querySelector("#oframecdnplayer");
   document.body.appendChild(chatBox);
+  chatBox.style.pointerEvents = "auto";
+  video.style.pointerEvents = "auto";
 
   // Send message on Enter
   input.addEventListener("keypress", (e) => {
@@ -191,4 +234,54 @@ import { getDatabase, ref, set, onValue, push } from "firebase/database";
       }, 2000);
     }
   });
+
+  document.addEventListener("fullscreenchange", () => {
+    const fullscreenElement = document.fullscreenElement;
+
+    if (fullscreenElement && fullscreenElement.contains(video)) {
+      // Fullscreen entered
+      fullscreenElement.appendChild(chatBox);
+      fullscreenElement.appendChild(reopenBtn);
+      fullscreenElement.appendChild(emojiiDiv);
+
+      chatBox.style.position = "fixed";
+      chatBox.style.right = "20px";
+      chatBox.style.bottom = "70px";
+
+      reopenBtn.style.position = "fixed";
+      reopenBtn.style.right = "20px";
+      reopenBtn.style.bottom = "70px";
+
+      console.log("[RezkaParty] Chat moved to fullscreen container.");
+    } else {
+      // Fullscreen exited — return chat to body
+      document.body.appendChild(chatBox);
+      document.body.appendChild(reopenBtn);
+      videoParent.appendChild(emojiiDiv);
+
+      chatBox.style.position = "fixed";
+      chatBox.style.right = "20px";
+      chatBox.style.bottom = "10px";
+
+      reopenBtn.style.position = "fixed";
+      reopenBtn.style.right = "20px";
+      reopenBtn.style.bottom = "70px";
+
+      console.log("[RezkaParty] Chat returned to normal view.");
+    }
+  });
 })();
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === "partyCreated") {
+    console.log("[RezkaParty] Party created, reloading state...");
+    location.reload();
+  }
+
+  if (message.type === "partyDisconnected") {
+    console.log("[RezkaParty] Party disconnected, cleaning up...");
+    setTimeout(() => {
+      location.reload();
+    }, 300);
+  }
+});
