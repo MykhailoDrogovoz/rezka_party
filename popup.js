@@ -57,8 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
         ) ||
         !(url.pathname.includes("/films/") || url.pathname.includes("/series/"))
       ) {
-        alert(url.hostname.includes("rezka-ua.tv"));
-        // alert("Please open a Rezka movie or TV show page first.");
+        alert(
+          "Please open a movie or TV show page first on these platforms rezka.ag or rezka-ua.tv."
+        );
         return;
       }
 
